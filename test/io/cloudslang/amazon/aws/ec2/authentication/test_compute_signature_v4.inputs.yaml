@@ -6,19 +6,20 @@
 #   http://www.apache.org/licenses/LICENSE-2.0
 #
 ########################################################################################################################
-testAmazonEC2ClassicDeployLocal:
-  testSuites: [amazon-local]
-  description: "Test that successfully deployes an Amazon AWS instance EC2 classic style."
-  testFlowPath: io.cloudslang.amazon.aws.ec2.samples.test_ec2_classic_deploy
+testAmazonComputeV4SignatureLocal:
+  testSuites: [amazon]
+  description: "Test that successfully computes a Amazon AWS signature based on V4 mechanism."
+  testFlowPath: io.cloudslang.amazon.aws.ec2.authentication.compute_signature_v4
   inputs:
+    - endpoint: <endpoint>
     - identity: <identity>
     - credential: <credential>
-    - proxy_host: <proxy_host>
-    - proxy_port: <proxy_port>
-    - region: <region>
-    - availability_zone: <availability_zone>
-    - image_id: <image_id>
-    - debug_mode: <debug_mode>
-    - instance_name: <instance_name>
-    - platform: <platform>
+    - amazon_api: <amazon_api>
+    - uri: <uri>
+    - http_verb: <http_verb>
+    - payload_hash: <payload_hash>
+    - security_token: <security_token>
+    - date: <date>
+    - query_params: <query_params>
+    - headers: <headers>
   result: SUCCESS

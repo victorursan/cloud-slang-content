@@ -9,7 +9,7 @@
 #!!
 #! @description: Performs an HTTP request to retrieve a list of all image offers for the specifed location and publisher
 #!
-#! @input subscription_id: Azure subscription ID
+#! @input subscription_id: The ID of the Azure Subscription on which the VM should be created.
 #! @input auth_token: Azure authorization Bearer token
 #! @input api_version: The API version used to create calls to Azure
 #!                     Default: '2015-06-15'
@@ -93,8 +93,10 @@ flow:
                 '/providers/Microsoft.Compute/locations/' + location + '/publishers/' + publisher +
                 '/artifacttypes/vmimage/offers?api-version=' + api_version}
             - headers: "${'Authorization: ' + auth_token}"
-            - auth_type
-            - content_type
+            - auth_type: 'anonymous'
+            - preemptive_auth: 'true'
+            - content_type: 'application/json'
+            - request_character_set: 'UTF-8'
             - proxy_host
             - proxy_port
             - proxy_username
@@ -103,11 +105,6 @@ flow:
             - x_509_hostname_verifier
             - trust_keystore
             - trust_password
-            - keystore
-            - keystore_password
-            - use_cookies
-            - keep_alive
-            - request_character_set
         publish:
           - output: ${return_result}
           - status_code

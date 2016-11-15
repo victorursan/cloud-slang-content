@@ -4,7 +4,6 @@
 #
 #   The Apache License is available at
 #   http://www.apache.org/licenses/LICENSE-2.0
-#
 ########################################################################################################################
 
 namespace: io.cloudslang.amazon.aws.ec2.instances
@@ -52,7 +51,7 @@ flow:
             - proxy_port
             - debug_mode
             - region
-            - instance_id
+            - instance_ids_string: ${instance_id}
             - force_stop
         navigate:
           - SUCCESS: sleep

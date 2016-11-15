@@ -9,16 +9,20 @@
 #!!
 #! @description: Restart virtual machine flow.
 #!
-#! @input subscription_id: Azure subscription ID
-#! @input location: Specifies the supported Azure location where the virtual machine should be created.
-#!                  This can be different from the location of the resource group.
+#! @input subscription_id: The ID of the Azure Subscription on which the VM should be created.
+#! @input resource_group_name: The name of the Azure Resource Group that should be used to create the VM.
+#! @input login_authority: optional - URL of the login authority that should be used when retrieving the Authentication Token.
 #! @input username: The username to be used to authenticate to the Azure Management Service.
 #! @input password: The password to be used to authenticate to the Azure Management Service.
-#! @input authority: the authority URL
-#! @input resource: the resource URL
-#! @input vm_name: virtual machine name
-#! @input resource_group_name: Azure resource group name
+#! @input location: Specifies the supported Azure location where the virtual machine should be created.
+#!                  This can be different from the location of the resource group.
+#! @input vm_name: The name of the virtual machine to be created.
+#!                 Virtual machine name cannot contain non-ASCII or special characters.
 #! @input polling_interval: Time to wait between checks
+#! @input connect_timeout: optional - time in seconds to wait for a connection to be established
+#!                         Default: '0' (infinite)
+#! @input socket_timeout: optional - time in seconds to wait for data to be retrieved
+#!                        Default: '0' (infinite)
 #! @input proxy_host: optional - proxy server used to access the web site
 #! @input proxy_port: optional - proxy server port - Default: '8080'
 #! @input proxy_username: optional - username used when connecting to the proxy
@@ -31,7 +35,6 @@
 #!                        Format: Java KeyStore (JKS)
 #! @input trust_password: optional - the password associated with the Trusttore file. If trust_all_roots is false
 #!                        and trust_keystore is empty, trust_password default will be supplied.
-#!                        Default: ''
 #! @input trust_all_roots: optional - specifies whether to enable weak security over SSL - Default: false
 #! @input x_509_hostname_verifier: optional - specifies the way the server hostname must match a domain name in
 #!                                 the subject's Common Name (CN) or subjectAltName field of the X.509 certificate
@@ -44,10 +47,6 @@
 #! @output error_message: If there is any error while running the flow, it will be populated, empty otherwise
 #!
 #! @result SUCCESS: The flow completed successfully.
-#! @result GET_AUTH_TOKEN_FAILURE: There was an error while trying to get the authentication token
-#! @result RESTART_VM_FAILURE: There was an error while trying to restart the virtual machine
-#! @result GET_POWER_STATE_FAILURE: There was an error while trying to retrieve the power state of the VM.
-#! @result COMPARE_POWER_STATE_FAILURE: There was an error while trying to compare the power state excepted and received.
 #! @result FAILURE: There was an error while trying to run every step of the flow.
 #!!#
 ########################################################################################################################
@@ -69,12 +68,17 @@ flow:
     - username
     - password:
         sensitive: true
-    - authority
-    - resource
+    - login_authority:
+        default: 'https://sts.windows.net/common'
+        required: false
     - vm_name
     - subscription_id
     - resource_group_name
+    - connect_timeout:
+        default: "0"
+        required: false
     - polling_interval:
+        required: false
         default: '30'
     - proxy_host:
         required: false
@@ -94,7 +98,6 @@ flow:
         required: false
     - trust_password:
         required: false
-        default: ''
         sensitive: true
 
   workflow:
@@ -103,8 +106,7 @@ flow:
           auth.get_auth_token:
             - username
             - password
-            - authority
-            - resource
+            - login_authority
             - proxy_host
             - proxy_port
             - proxy_username
@@ -115,7 +117,7 @@ flow:
           - error_message: ${exception}
         navigate:
           - SUCCESS: restart_vm
-          - FAILURE: GET_AUTH_TOKEN_FAILURE
+          - FAILURE: on_failure
 
     - restart_vm:
         do:
@@ -124,6 +126,8 @@ flow:
             - subscription_id
             - resource_group_name
             - auth_token
+            - connect_timeout
+            - socket_timeout: '0'
             - proxy_host
             - proxy_port
             - proxy_username
@@ -134,10 +138,11 @@ flow:
             - trust_password
         publish:
           - output
+          - status_code
           - error_message
         navigate:
           - SUCCESS: get_power_state
-          - FAILURE: RESTART_VM_FAILURE
+          - FAILURE: on_failure
 
     - get_power_state:
          do:
@@ -146,6 +151,8 @@ flow:
             - subscription_id
             - resource_group_name
             - auth_token
+            - connect_timeout
+            - socket_timeout: '0'
             - proxy_host
             - proxy_port
             - proxy_username
@@ -156,10 +163,11 @@ flow:
             - trust_password
          publish:
            - power_state: ${output}
+           - status_code
            - error_message
          navigate:
            - SUCCESS: check_power_state
-           - FAILURE: GET_POWER_STATE_FAILURE
+           - FAILURE: on_failure
 
     - check_power_state:
         do:
@@ -170,7 +178,7 @@ flow:
           - expected_power_state: ${return_result}
         navigate:
           - SUCCESS: compare_power_state
-          - FAILURE: COMPARE_POWER_STATE_FAILURE
+          - FAILURE: on_failure
 
     - compare_power_state:
         do:
@@ -187,7 +195,7 @@ flow:
             - seconds: ${polling_interval}
         navigate:
           - SUCCESS: get_power_state
-          - FAILURE: FAILURE
+          - FAILURE: on_failure
 
   outputs:
     - output
@@ -197,9 +205,35 @@ flow:
 
   results:
     - SUCCESS
-    - GET_AUTH_TOKEN_FAILURE
-    - RESTART_VM_FAILURE
-    - GET_POWER_STATE_FAILURE
-    - COMPARE_POWER_STATE_FAILURE
     - FAILURE
+extensions:
+  graph:
+    steps:
+      get_auth_token:
+        x: 69
+        y: 99
+      restart_vm:
+        x: 277
+        y: 101
+      get_power_state:
+        x: 481
+        y: 100
+      check_power_state:
+        x: 699
+        y: 102
+      compare_power_state:
+        x: 947
+        y: 87
+        navigate:
+          a242a979-7959-665a-c0c8-83c6ecfd5961:
+            targetId: ecff727c-71cf-73c5-827c-165f79929e7e
+            port: SUCCESS
+      sleep:
+        x: 700
+        y: 311
+    results:
+      SUCCESS:
+        ecff727c-71cf-73c5-827c-165f79929e7e:
+          x: 1122
+          y: 105
 
