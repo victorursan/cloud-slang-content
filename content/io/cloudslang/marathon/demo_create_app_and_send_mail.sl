@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -17,9 +17,9 @@
 #! @input email_username: email username
 #! @input email_password: email password
 #! @input marathon_host: Marathon agent host
-#! @input marathon_port: optional - Marathon agent port - Default: 8080
-#! @input proxy_host: optional - proxy host
-#! @input proxy_port: optional - proxy port
+#! @input marathon_port: Optional - Marathon agent port - Default: 8080
+#! @input proxy_host: Optional - proxy host
+#! @input proxy_port: Optional - proxy port
 #! @input json_file: path to JSON of new app
 #!
 #! @output return_result: operation response

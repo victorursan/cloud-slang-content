@@ -1,4 +1,4 @@
-#   (c) Copyright 2014-2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2014-2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -8,14 +8,14 @@
 #!!
 #! @description: Deletes unused Docker images.
 #!
-#! @input docker_options: optional - options for the docker environment
+#! @input docker_options: Optional - options for the docker environment
 #!                        from the construct: docker [OPTIONS] COMMAND [arg...]
 #! @input docker_host: Docker machine host
 #! @input docker_username: Docker machine username
-#! @input docker_password: optional - Docker machine password
-#! @input port: optional - SSH port
-#! @input private_key_file: optional - path to the private key file
-#! @input timeout: optional - time in milliseconds to wait for the command to complete
+#! @input docker_password: Optional - Docker machine password
+#! @input port: Optional - SSH port
+#! @input private_key_file: Optional - path to the private key file
+#! @input timeout: Optional - time in milliseconds to wait for the command to complete
 #! @input all_parent_images_input: list of parent images
 #!
 #! @output images_list_safe_to_delete: unused Docker images

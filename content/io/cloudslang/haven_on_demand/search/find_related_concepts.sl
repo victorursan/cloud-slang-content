@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -12,30 +12,30 @@
 #!
 #! @input api_key: API key
 #! @input text: query text
-#! @input field_text: optional - fields that results documents must contain
-#! @input indexes: optional - one or more text indexes to return only documents that are
+#! @input field_text: Optional - fields that results documents must contain
+#! @input indexes: Optional - one or more text indexes to return only documents that are
 #!                 stored in these text indexes
-#! @input max_date: optional - latest creation date or time that a document can have
+#! @input max_date: Optional - latest creation date or time that a document can have
 #!                  to return as a result
-#! @input max_results: optional - maximum number of related concepts to return
+#! @input max_results: Optional - maximum number of related concepts to return
 #!                     default: 20
-#! @input min_date: optional - earliest creation date or time that a document can have
+#! @input min_date: Optional - earliest creation date or time that a document can have
 #!                  to return as a result
-#! @input min_score: optional - minimum percentage relevance that results must have
+#! @input min_score: Optional - minimum percentage relevance that results must have
 #!                   to return as a result.
 #!                   default: 0
-#! @input sample_size: optional - maximum number of documents to use to generate concepts.
+#! @input sample_size: Optional - maximum number of documents to use to generate concepts.
 #!                     The maximum value is 500 for public datasets, and 10000
 #!                     for your own text indexes.
 #!                     default: 250
-#! @input proxy_host: optional - proxy server
-#! @input proxy_port: optional - proxy server port
+#! @input proxy_host: Optional - proxy server
+#! @input proxy_port: Optional - proxy server port
 #!
 #! @output return_result: result of API
 #! @output error_message: error message if one exists, empty otherwise
 #!
 #! @result SUCCESS: best phrases and terms retrieved successfully
-#! @result FAILURE: there was an error while trying to retrieve best phrases and terms
+#! @result FAILURE: There was an error while trying to retrieve best phrases and terms
 #!!#
 ########################################################################################################################
 

@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -10,11 +10,11 @@
 #! @description: Sends an HTTP request to update a Marathon app.
 #!
 #! @input marathon_host: Marathon agent host
-#! @input marathon_port: optional - Marathon agent port - Default: 8080
+#! @input marathon_port: Optional - Marathon agent port - Default: 8080
 #! @input app_id: app ID to update
 #! @input body: application resource JSON
-#! @input proxy_host: optional - proxy host
-#! @input proxy_port: optional - proxy port
+#! @input proxy_host: Optional - proxy host
+#! @input proxy_port: Optional - proxy port
 #!
 #! @output return_result: response of the operation
 #! @output status_code: normal status code is 200
@@ -61,7 +61,7 @@ operation:
         private: true
 
   java_action:
-    gav: 'io.cloudslang.content:cs-http-client:0.1.68'
+    gav: 'io.cloudslang.content:cs-http-client:0.1.71'
     class_name: io.cloudslang.content.httpclient.HttpClientAction
     method_name: execute
 

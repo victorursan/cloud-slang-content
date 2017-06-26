@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -12,19 +12,19 @@
 #! @input api_key: API key
 #! @input reference: Haven OnDemand reference
 #! @input index: text index to search for matching categories. Must be of the categorization flavor.
-#! @input max_results: optional - maximum number of categories to return
+#! @input max_results: Optional - maximum number of categories to return
 #!                     default: 10
-#! @input print_value: optional - types of fields and content to display in the results
+#! @input print_value: Optional - types of fields and content to display in the results
 #!                     default: fields
 #! @input print_fields: names of fields to print in the results
-#! @input proxy_host: optional - proxy server
-#! @input proxy_port: optional - proxy server port
+#! @input proxy_host: Optional - proxy server
+#! @input proxy_port: Optional - proxy server port
 #!
 #! @output return_result: result of API
 #! @output error_message: error message if one exists, empty otherwise
 #!
 #! @result SUCCESS: documents successfully categorized based on categories created
-#! @result FAILURE: there was an error while trying to categorize the documents
+#! @result FAILURE: There was an error while trying to categorize the documents
 #!!#
 ########################################################################################################################
 

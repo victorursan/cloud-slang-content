@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -10,13 +10,13 @@
 #! @description: Retrieves a list of Marathon apps.
 #!
 #! @input marathon_host: Marathon agent host
-#! @input marathon_port: optional - Marathon agent port - Default: 8080
-#! @input cmd: optional - filter apps to only those whose commands contain cmd
-#! @input embed: optional - embeds nested resources that match supplied path - Default: none
+#! @input marathon_port: Optional - Marathon agent port - Default: 8080
+#! @input cmd: Optional - filter apps to only those whose commands contain cmd
+#! @input embed: Optional - embeds nested resources that match supplied path - Default: none
 #!               Valid: "apps.tasks" App's tasks are not embedded in response by default "apps.failures".
 #!               App's last failures are not embedded in response by default
-#! @input proxy_host: optional - proxy host
-#! @input proxy_port: optional - proxy port
+#! @input proxy_host: Optional - proxy host
+#! @input proxy_port: Optional - proxy port
 #!
 #! @output return_result: response of the operation
 #! @output error_message: return_result if return_code == -1 or status_code != 200
@@ -66,7 +66,7 @@ operation:
         private: true
 
   java_action:
-    gav: 'io.cloudslang.content:cs-http-client:0.1.68'
+    gav: 'io.cloudslang.content:cs-http-client:0.1.71'
     class_name: io.cloudslang.content.httpclient.HttpClientAction
     method_name: execute
 

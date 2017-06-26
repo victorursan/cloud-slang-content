@@ -1,4 +1,4 @@
-#   (c) Copyright 2014-2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2014-2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -10,14 +10,14 @@
 #! @description: Performs a git command to commit staged files to a local repository.
 #!
 #! @input host: hostname or IP address
-#! @input port: optional - port number for running the command
+#! @input port: Optional - port number for running the command
 #! @input username: username to connect as
-#! @input password: optional - password of user
-#! @input sudo_user: optional - true or false, whether the command should execute using sudo - Default: false
-#! @input private_key_file: optional - absolute path to private key file
-#! @input git_repository_localdir: optional - target directory where a git repository exists - Default: /tmp/repo.git
-#! @input git_commit_files: optional - files to commit - Default: "-a"
-#! @input git_commit_message: optional - message for commit
+#! @input password: Optional - password of user
+#! @input sudo_user: Optional - true or false, whether the command should execute using sudo - Default: false
+#! @input private_key_file: Optional - absolute path to private key file
+#! @input git_repository_localdir: Optional - target directory where a git repository exists - Default: /tmp/repo.git
+#! @input git_commit_files: Optional - files to commit - Default: "-a"
+#! @input git_commit_message: Optional - message for commit
 #!
 #! @output return_result: STDOUT of the remote machine in case of success or the cause of the error in case of exception
 #! @output standard_out: STDOUT of the machine in case of successful request, null otherwise
@@ -31,7 +31,7 @@
 #! @output return_code: return code of the command
 #!
 #! @result SUCCESS: staged files committed successfully
-#! @result FAILURE: there was an error while trying to commit staged files
+#! @result FAILURE: There was an error while trying to commit staged files
 #!!#
 ########################################################################################################################
 

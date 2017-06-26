@@ -1,21 +1,21 @@
-# (c) Copyright 2015 Liran Tal
-# All rights reserved. This program and the accompanying materials
-# are made available under the terms of the Apache License v2.0 which accompany this distribution.
+#   (c) Copyright 2014-2017 Hewlett-Packard Enterprise Development Company, L.P.
+#   All rights reserved. This program and the accompanying materials
+#   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
-# The Apache License is available at
-# http://www.apache.org/licenses/LICENSE-2.0
+#   The Apache License is available at
+#   http://www.apache.org/licenses/LICENSE-2.0
 #
 ########################################################################################################################
 #!!
 #! @description: Performs a git reset on a git directory to clean it up.
 #!
 #! @input host: hostname or IP address
-#! @input port: optional - port number for running the command
+#! @input port: Optional - port number for running the command
 #! @input username: username to connect as
-#! @input password: optional - password of user
+#! @input password: Optional - password of user
 #! @input git_repository_localdir: target directory where a git repository exists - Default: /tmp/repo.git
-#! @input git_reset_target: optional - SHA you want to reset the branch to - Default: HEAD
-#! @input sudo_user: optional - true or false, whether the command should execute using sudo
+#! @input git_reset_target: Optional - SHA you want to reset the branch to - Default: HEAD
+#! @input sudo_user: Optional - true or false, whether the command should execute using sudo
 #! @input private_key_file: absolute path to the private key file
 #!
 #! @output return_result: STDOUT of the remote machine in case of success or the cause of the error in case of exception
@@ -30,7 +30,7 @@
 #! @output return_code: return code of the command
 #!
 #! @result SUCCESS: GIT directory was reset successfully
-#! @result FAILURE: there was an error while trying to reset GIT directory and/or while trying to clean it
+#! @result FAILURE: There was an error while trying to reset GIT directory and/or while trying to clean it
 #!!#
 ########################################################################################################################
 

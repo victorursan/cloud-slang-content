@@ -1,21 +1,21 @@
-# (c) Copyright 2015 Liran Tal
-# All rights reserved. This program and the accompanying materials
-# are made available under the terms of the Apache License v2.0 which accompany this distribution.
+#   (c) Copyright 2014-2017 Hewlett-Packard Enterprise Development Company, L.P.
+#   All rights reserved. This program and the accompanying materials
+#   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
-# The Apache License is available at
-# http://www.apache.org/licenses/LICENSE-2.0
+#   The Apache License is available at
+#   http://www.apache.org/licenses/LICENSE-2.0
 #
 ########################################################################################################################
 #!!
 #! @description: Performs a git push command to send a branch to a remote git repository.
 #!
 #! @input host: hostname or IP address
-#! @input port: optional - port number for running the command
+#! @input port: Optional - port number for running the command
 #! @input username: username to connect as
-#! @input password: optional - password of user
-#! @input git_repository_localdir: optional - target directory where a git repository exists - Default: /tmp/repo.git
-#! @input git_push_branch: optional - branch to push - Default: master
-#! @input git_push_remote: optional - remote to push to - Default: origin
+#! @input password: Optional - password of user
+#! @input git_repository_localdir: Optional - target directory where a git repository exists - Default: /tmp/repo.git
+#! @input git_push_branch: Optional - branch to push - Default: master
+#! @input git_push_remote: Optional - remote to push to - Default: origin
 #! @input sudo_user: true or false, whether the command should execute using sudo - Default: false
 #! @input private_key_file: absolute path to the private key file
 #!
@@ -31,7 +31,7 @@
 #! @output return_code: return code of the command
 #!
 #! @result SUCCESS: GIT branch successfully pushed to the remote repository
-#! @result FAILURE: there was an error while trying to push the branch to the remote repository
+#! @result FAILURE: There was an error while trying to push the branch to the remote repository
 #!!#
 ########################################################################################################################
 

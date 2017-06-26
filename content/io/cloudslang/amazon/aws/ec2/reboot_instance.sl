@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -14,7 +14,7 @@
 #! @input credential: Secret access key associated with your Amazon AWS account.
 #! @input proxy_host: Proxy server used to access the provider services
 #! @input proxy_port: Proxy server port used to access the provider services
- #!                   Default: '8080'
+#!                    Default: '8080'
 #! @input proxy_username: Proxy server user name.
 #! @input proxy_password: Proxy server password associated with the proxyUsername input value.
 #! @input headers: String containing the headers to use for the request separated by new line (CRLF). The header
@@ -25,18 +25,17 @@
 #!                      between name-value pairs is "&" symbol. The query name will be separated from query value by "=".
 #!                      Examples: "parameterName1=parameterValue1&parameterName2=parameterValue2"
 #! @input instance_id: The ID of the server (instance) you want to reboot
-#! @input region: Region where the server (instance) is.
-#!                Default: 'us-east-1'
 #! @input polling_interval: The number of seconds to wait until performing another check.
 #!                          Default: 10
 #! @input polling_retries: The number of retries to check if the instance is stopped.
 #!                         Default: 50
 #!
-#! @output output: contains the success message or the exception in case of failure
+#! @output output: contains the state of the instance or the exception in case of failure
+#! @output ip_address: The public IP address of the instance
 #! @output return_code: "0" if operation was successfully executed, "-1" otherwise
 #! @output exception: exception if there was an error when executing, empty otherwise
 #!
-#! @result SUCCESS: the server (instance) was successfully rebooted
+#! @result SUCCESS: The server (instance) was successfully rebooted
 #! @result FAILURE: error rebooting instance
 #!!#
 ########################################################################################################################
@@ -45,6 +44,8 @@ namespace: io.cloudslang.amazon.aws.ec2
 
 imports:
   instances: io.cloudslang.amazon.aws.ec2.instances
+  xml: io.cloudslang.base.xml
+  strings: io.cloudslang.base.strings
 
 flow:
   name: reboot_instance
@@ -65,10 +66,7 @@ flow:
         required: false
     - query_params:
         required: false
-    - instance_id:
-        required: true
-    - region:
-        required: false
+    - instance_id
     - polling_interval:
         required: false
     - polling_retries:
@@ -88,12 +86,12 @@ flow:
             - headers
             - query_params
         publish:
-          - return_result
+          - output: '${return_result}'
           - return_code
           - exception
         navigate:
-          - FAILURE: FAILURE
           - SUCCESS: check_instance_state
+          - FAILURE: on_failure
 
     - check_instance_state:
         loop:
@@ -103,23 +101,71 @@ flow:
               - identity
               - credential
               - instance_id
-              - instance_state: running
+              - instance_state: 'running'
               - proxy_host
               - proxy_port
-              - region
+              - proxy_username
+              - proxy_password
               - polling_interval
           break:
             - SUCCESS
           publish:
-            - return_result: '${output}'
+            - output
             - return_code
             - exception
         navigate:
-          - FAILURE: FAILURE
+          - SUCCESS: search_and_replace
+          - FAILURE: on_failure
+
+    - search_and_replace:
+        do:
+          strings.search_and_replace:
+            - origin_string: '${output}'
+            - text_to_replace: xmlns
+            - replace_with: xhtml
+        publish:
+          - replaced_string
+        navigate:
+          - SUCCESS: parse_state
+          - FAILURE: on_failure
+
+    - parse_state:
+        do:
+          xml.xpath_query:
+              - xml_document: ${replaced_string}
+              - xpath_query: >
+                  ${'"/*[local-name()='DescribeInstancesResponse']/*[local-name()='reservationSet']' +
+                  '/*[local-name()='item']/*[local-name()='instancesSet']/*[local-name()='item']' +
+                  '/*[local-name()='instanceState']/*[local-name()='name']"')
+              - query_type: 'value'
+        publish:
+            - output: ${selected_value}
+            - return_code
+        navigate:
+          - SUCCESS: parse_ip_address
+          - FAILURE: on_failure
+
+    - parse_ip_address:
+        do:
+          xml.xpath_query:
+            - xml_document: '${replaced_string}'
+            - xpath_query: >
+                ${'"/*[local-name()='DescribeInstancesResponse']/*[local-name()='reservationSet']' +
+                '/*[local-name()='item']/*[local-name()='instancesSet']/*[local-name()='item']' +
+                '/*[local-name()='ipAddress']"'}
+            - query_type: 'value'
+        publish:
+          - ip_address: '${selected_value}'
+          - return_result: '${return_result}'
+          - error_message: '${error_message}'
+          - return_code: '${return_code}'
+        navigate:
           - SUCCESS: SUCCESS
+          - FAILURE: on_failure
 
   outputs:
-    - output: '${return_result}'
+    - output
+    - ip_address
     - return_code
     - exception
 
@@ -127,32 +173,3 @@ flow:
     - SUCCESS
     - FAILURE
 
-extensions:
-  graph:
-    steps:
-      reboot_instances:
-        x: 74
-        y: 73
-        navigate:
-          19eed9a4-7b57-5201-6bdf-317af7f1fe7e:
-            targetId: 48574ded-e846-247a-6c11-2497265849aa
-            port: FAILURE
-      check_instance_state:
-        x: 317
-        y: 70
-        navigate:
-          3654941e-a894-e960-e463-1b2b8315697d:
-            targetId: 6912f217-4cd7-11c7-8f89-428022b6558c
-            port: SUCCESS
-          4342a1f4-3721-15c1-d70a-586df655fa47:
-            targetId: 48574ded-e846-247a-6c11-2497265849aa
-            port: FAILURE
-    results:
-      SUCCESS:
-        6912f217-4cd7-11c7-8f89-428022b6558c:
-          x: 560
-          y: 74
-      FAILURE:
-        48574ded-e846-247a-6c11-2497265849aa:
-          x: 206
-          y: 218

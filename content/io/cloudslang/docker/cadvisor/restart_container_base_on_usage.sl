@@ -1,4 +1,4 @@
-#   (c) Copyright 2014-2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2014-2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -11,12 +11,12 @@
 #!
 #! @input container: name or ID of Docker container that runs cAdvisor
 #! @input host: Docker machine host
-#! @input cadvisor_port: optional - port used for cAdvisor - Default: '8080'
-#! @input machine_connect_port: optional - port to use to connect to machine running Docker - Default: '22'
+#! @input cadvisor_port: Optional - port used for cAdvisor - Default: '8080'
+#! @input machine_connect_port: Optional - port to use to connect to machine running Docker - Default: '22'
 #! @input username: Docker machine username
-#! @input password: optional - Docker machine password
-#! @input private_key_file: optional - path to the private key file
-#! @input rule: optional - Python query to determine if the resource usages is high
+#! @input password: Optional - Docker machine password
+#! @input private_key_file: Optional - path to the private key file
+#! @input rule: Optional - Python query to determine if the resource usages is high
 #!
 #! @result SUCCESS: successful
 #! @result FAILURE: otherwise

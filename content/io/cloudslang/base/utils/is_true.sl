@@ -1,4 +1,4 @@
-#   (c) Copyright 2015-2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2015-2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -8,11 +8,11 @@
 ########################################################################################################################
 #!!
 #! @description: Checks if boolean is true or false. Used for flow control.
-#1
-#! @input bool_value: Boolean value to check
-#1
-#! @result TRUE: bool_value is true
-#! @result FALSE: bool_value is false
+#!
+#! @input bool_value: Boolean value to check.
+#!
+#! @result TRUE: bool_value is true.
+#! @result FALSE: bool_value is false.
 #!!#
 ########################################################################################################################
 

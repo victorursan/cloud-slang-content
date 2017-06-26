@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -15,15 +15,15 @@
 #! @input url: YouTube url for the video
 #! @input index: index to add the extracted text to
 #! @input proxy_host: proxy server
-#!                    optional
+#!                    Optional
 #! @input proxy_port: proxy server port
-#!                    optional
+#!                    Optional
 #!
 #! @output error_message: error message if one exists, empty otherwise
 #! @output return_result: result retured by Haven OnDemand upon adding item to the index
 #!
 #! @result SUCCESS: video text extracted successfully
-#! @result FAILURE: there was an error while trying to extract the text from a video
+#! @result FAILURE: There was an error while trying to extract the text from a video
 #!!#
 ########################################################################################################################
 

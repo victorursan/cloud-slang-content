@@ -1,4 +1,4 @@
-#   (c) Copyright 2014-2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2014-2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -12,15 +12,15 @@
 #! @input db_container_id: ID of the DB container
 #! @input linked_container_id: ID of the linked container
 #! @input docker_host: Docker machine host
-#! @input port: optional - SSH port
+#! @input port: Optional - SSH port
 #! @input docker_username: Docker machine username
-#! @input docker_password: optional - Docker machine host password
-#! @input private_key_file: optional - path to private key file
+#! @input docker_password: Optional - Docker machine host password
+#! @input private_key_file: Optional - path to private key file
 #!
 #! @output error_message: error message
 #!
 #! @result SUCCESS: both Docker containers deleted successfully
-#! @result FAILURE: there was an error while trying to delete one or both Docker containers
+#! @result FAILURE: There was an error while trying to delete one or both Docker containers
 #!!#
 ########################################################################################################################
 

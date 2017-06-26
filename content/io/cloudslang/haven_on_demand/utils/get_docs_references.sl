@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -11,13 +11,13 @@
 #!
 #! @input json_input: JSON containing references
 #! @input key: references key
-#1 @input reference_list: references list
+#! @input reference_list: references list
 #!
 #! @output references: list of references
 #! @output error_message: error message if there was an error when executing, empty otherwise
 #!
 #! @result SUCCESS: document list retrieved successfully
-#! @result FAILURE: there was an error while trying to retrieve the document list
+#! @result FAILURE: There was an error while trying to retrieve the document list
 #!!#
 ########################################################################################################################
 

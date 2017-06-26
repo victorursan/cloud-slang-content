@@ -1,23 +1,23 @@
-# (c) Copyright 2015 Liran Tal
-# All rights reserved. This program and the accompanying materials
-# are made available under the terms of the Apache License v2.0 which accompany this distribution.
+#   (c) Copyright 2014-2017 Hewlett-Packard Enterprise Development Company, L.P.
+#   All rights reserved. This program and the accompanying materials
+#   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
-# The Apache License is available at
-# http://www.apache.org/licenses/LICENSE-2.0
+#   The Apache License is available at
+#   http://www.apache.org/licenses/LICENSE-2.0
 #
 ########################################################################################################################
 #!!
 #! @description: Merges a git branch to another branch.
 #!
 #! @input host: hostname or IP address
-#! @input port: optional - port number for running the command
+#! @input port: Optional - port number for running the command
 #! @input username: username to connect as
-#! @input password: optional - password of user
-#! @input git_repository_localdir: optional - target directory where a git repository exists
+#! @input password: Optional - password of user
+#! @input git_repository_localdir: Optional - target directory where a git repository exists
 #!                                 Default: /tmp/repo.git
-#! @input git_merge_branch: optional - branch to merge from
-#! @input sudo_user: optional - true or false, whether the command should execute using sudo - Default: false
-#! @input private_key_file: optional - relative or absolute path to private key file
+#! @input git_merge_branch: Optional - branch to merge from
+#! @input sudo_user: Optional - true or false, whether the command should execute using sudo - Default: false
+#! @input private_key_file: Optional - relative or absolute path to private key file
 #!
 #! @output return_result: STDOUT of the remote machine in case of success or the cause of the error in case of exception
 #! @output standard_out: STDOUT of the machine in case of successful request, null otherwise
@@ -31,7 +31,7 @@
 #! @output return_code: return code of the command
 #!
 #! @result SUCCESS: GIT branch merged successfully to another branch
-#! @result FAILURE: there was an error while trying to merge a GIT branch to another
+#! @result FAILURE: There was an error while trying to merge a GIT branch to another
 #!!#
 ########################################################################################################################
 

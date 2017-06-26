@@ -1,4 +1,4 @@
-#   (c) Copyright 2014-2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2014-2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -12,14 +12,14 @@
 #!
 #! @input manager_machine_ip: IP address of the machine with the Swarm manager container
 #! @input manager_machine_username: username of the machine with the Swarm manager
-#! @input manager_machine_password: optional - password of the machine with the Swarm manager
-#! @input manager_machine_private_key_file: optional - path to private key file of the machine with the Swarm manager
+#! @input manager_machine_password: Optional - password of the machine with the Swarm manager
+#! @input manager_machine_private_key_file: Optional - path to private key file of the machine with the Swarm manager
 #! @input manager_machine_port: port used by the Swarm manager container
 #! @input agent_ip_addresses: comma delimited list of IP addresses - the corresponding machines will be used as Swarm agents
 #!                            Example: "111.111.111.111,111.111.111.222"
 #! @input agent_usernames: comma delimited list of usernames for agent machines - Example: "core,core"
-#! @input agent_passwords: optional - comma delimited list of password for agent machines - Example: "pass,pass"
-#! @input agent_private_key_files: optional - comma delimited list of paths to private key files for agent machines
+#! @input agent_passwords: Optional - comma delimited list of password for agent machines - Example: "pass,pass"
+#! @input agent_private_key_files: Optional - comma delimited list of paths to private key files for agent machines
 #!                                 Example: "foo/key_rsa,bar/key_rsa"
 #! @input attempts: number of attempts to check whether nodes were added to the cluster
 #!                 total waiting time ~ attempt * time_to_sleep

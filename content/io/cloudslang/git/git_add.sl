@@ -1,4 +1,4 @@
-#   (c) Copyright 2014-2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2014-2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -10,13 +10,13 @@
 #! @description: Performs a git command to add files as staged files for a later local commit.
 #!
 #! @input host: hostname or IP address
-#! @input port: optional - port number for running the command
+#! @input port: Optional - port number for running the command
 #! @input username: username to connect as
-#! @input password: optional - password of user
-#! @input sudo_user: optional - true or false, whether the command should execute using sudo - Default: false
-#! @input private_key_file: optional - path to private key file
+#! @input password: Optional - password of user
+#! @input sudo_user: Optional - true or false, whether the command should execute using sudo - Default: false
+#! @input private_key_file: Optional - path to private key file
 #! @input git_repository_localdir: target directory where a git repository exists - Default: /tmp/repo.git
-#! @input git_add_files: optional - files to add/stage - Default: "*"
+#! @input git_add_files: Optional - files to add/stage - Default: "*"
 #!
 #! @output return_result: STDOUT of the remote machine in case of success or the cause of the error in case of exception
 #! @output standard_err: STDERR of the machine in case of successful request, null otherwise
@@ -30,7 +30,7 @@
 #! @output return_code: return code of the command
 #!
 #! @result SUCCESS: files added and staged successfully
-#! @result FAILURE: there was an error while trying to add the files to GIT
+#! @result FAILURE: There was an error while trying to add the files to GIT
 #!!#
 ########################################################################################################################
 

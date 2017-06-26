@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -26,18 +26,17 @@
 #!                      value by "=".
 #!                      Examples: "parameterName1=parameterValue1&parameterName2=parameterValue2"
 #! @input instance_id: The ID of the server (instance) you want to start.
-#! @input region: Region where the server (instance) is.
-#!                Default: 'us-east-1'
 #! @input polling_interval: The number of seconds to wait until performing another check.
 #!                          Default: 10
 #! @input polling_retries: The number of retries to check if the instance is stopped.
 #!                         Default: 50
 #!
-#! @output output: contains the success message or the exception in case of failure
+#! @output output: contains the state of the instance or the exception in case of failure
+#! @output ip_address: The public IP address of the instance
 #! @output return_code: "0" if operation was successfully executed, "-1" otherwise
 #! @output exception: exception if there was an error when executing, empty otherwise
 #!
-#! @result SUCCESS: the server (instance) was successfully started
+#! @result SUCCESS: The server (instance) was successfully started
 #! @result FAILURE: error starting instance
 #!!#
 ########################################################################################################################
@@ -46,6 +45,8 @@ namespace: io.cloudslang.amazon.aws.ec2
 
 imports:
   instances: io.cloudslang.amazon.aws.ec2.instances
+  xml: io.cloudslang.base.xml
+  strings: io.cloudslang.base.strings
 
 flow:
   name: start_instance
@@ -66,10 +67,7 @@ flow:
         required: false
     - query_params:
         required: false
-    - instance_id:
-        required: true
-    - region:
-        required: false
+    - instance_id
     - polling_interval:
         required: false
     - polling_retries:
@@ -89,12 +87,12 @@ flow:
             - query_params
             - instance_ids_string: '${instance_id}'
         publish:
-          - return_result
+          - output: '${return_result}'
           - return_code
           - exception
         navigate:
-          - FAILURE: FAILURE
           - SUCCESS: check_instance_state
+          - FAILURE: on_failure
 
     - check_instance_state:
         loop:
@@ -107,20 +105,68 @@ flow:
               - instance_state: running
               - proxy_host
               - proxy_port
-              - region
+              - proxy_username
+              - proxy_password
               - polling_interval
           break:
             - SUCCESS
           publish:
-            - return_result: '${output}'
+            - output
             - return_code
             - exception
         navigate:
-          - FAILURE: FAILURE
+          - SUCCESS: search_and_replace
+          - FAILURE: on_failure
+
+    - search_and_replace:
+        do:
+          strings.search_and_replace:
+            - origin_string: '${output}'
+            - text_to_replace: xmlns
+            - replace_with: xhtml
+        publish:
+          - replaced_string
+        navigate:
+          - SUCCESS: parse_state
+          - FAILURE: on_failure
+
+    - parse_state:
+        do:
+          xml.xpath_query:
+              - xml_document: ${replaced_string}
+              - xpath_query: >
+                  ${'"/*[local-name()='DescribeInstancesResponse']/*[local-name()='reservationSet']' +
+                  '/*[local-name()='item']/*[local-name()='instancesSet']/*[local-name()='item']' +
+                  '/*[local-name()='instanceState']/*[local-name()='name']"')
+              - query_type: 'value'
+        publish:
+            - output: '${selected_value}'
+            - return_code
+        navigate:
+          - SUCCESS: parse_ip_address
+          - FAILURE: on_failure
+
+    - parse_ip_address:
+        do:
+          xml.xpath_query:
+            - xml_document: '${replaced_string}'
+            - xpath_query: >
+                ${'"/*[local-name()='DescribeInstancesResponse']/*[local-name()='reservationSet']' +
+                '/*[local-name()='item']/*[local-name()='instancesSet']/*[local-name()='item']' +
+                '/*[local-name()='ipAddress']"'}
+            - query_type: 'value'
+        publish:
+          - ip_address: '${selected_value}'
+          - return_result: '${return_result}'
+          - error_message: '${error_message}'
+          - return_code: '${return_code}'
+        navigate:
           - SUCCESS: SUCCESS
+          - FAILURE: on_failure
 
   outputs:
-    - output: '${return_result}'
+    - output
+    - ip_address
     - return_code
     - exception
 
@@ -128,32 +174,3 @@ flow:
     - SUCCESS
     - FAILURE
 
-extensions:
-  graph:
-    steps:
-      start_instances:
-        x: 73
-        y: 109
-        navigate:
-          d7e9587b-5154-9bbd-e2da-f0c037cf0d94:
-            targetId: f9b4a5ca-8ac6-5285-7503-5af980a1c447
-            port: FAILURE
-      check_instance_state:
-        x: 318
-        y: 107
-        navigate:
-          3654941e-a894-e960-e463-1b2b8315697d:
-            targetId: 6912f217-4cd7-11c7-8f89-428022b6558c
-            port: SUCCESS
-          a6cbc920-3426-fdaf-591a-abaf7e835ad0:
-            targetId: f9b4a5ca-8ac6-5285-7503-5af980a1c447
-            port: FAILURE
-    results:
-      SUCCESS:
-        6912f217-4cd7-11c7-8f89-428022b6558c:
-          x: 568
-          y: 111
-      FAILURE:
-        f9b4a5ca-8ac6-5285-7503-5af980a1c447:
-          x: 196
-          y: 256

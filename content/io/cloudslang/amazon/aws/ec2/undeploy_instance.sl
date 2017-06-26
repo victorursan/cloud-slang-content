@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -31,7 +31,7 @@
 #! @output return_code: "0" if operation was successfully executed, "-1" otherwise
 #! @output exception: Exception if there was an error when executing, empty otherwise
 #!
-#! @result SUCCESS: the server (instance) was successfully terminated
+#! @result SUCCESS: The server (instance) was successfully terminated
 #! @result FAILURE: error terminating instance
 #!!#
 ########################################################################################################################
@@ -76,12 +76,12 @@ flow:
             - headers
             - instance_ids_string: '${instance_id}'
         publish:
-          - return_result
+          - output: '${return_result}'
           - return_code
           - exception
         navigate:
-          - FAILURE: FAILURE
           - SUCCESS: check_instance_state
+          - FAILURE: on_failure
 
     - check_instance_state:
         loop:
@@ -92,54 +92,27 @@ flow:
               - credential
               - proxy_host
               - proxy_port
+              - proxy_username
+              - proxy_password
               - instance_id
               - instance_state: terminated
               - polling_interval
           break:
             - SUCCESS
           publish:
-            - return_result: '${output}'
+            - output
             - return_code
             - exception
         navigate:
-          - FAILURE: FAILURE
           - SUCCESS: SUCCESS
+          - FAILURE: on_failure
 
   outputs:
-    - output: '${return_result}'
+    - output
     - return_code
     - exception
 
   results:
-    - FAILURE
     - SUCCESS
+    - FAILURE
 
-extensions:
-  graph:
-    steps:
-      terminate_instances:
-        x: 286
-        y: 74
-        navigate:
-          1ef74747-b11f-1306-de18-f2321d46e5b3:
-            targetId: e7e52e5e-c856-c253-0b31-ba3c203fc09c
-            port: FAILURE
-      check_instance_state:
-        x: 534
-        y: 70
-        navigate:
-          4fd4daaf-1439-17f4-6af8-80a97d551e2a:
-            targetId: e7e52e5e-c856-c253-0b31-ba3c203fc09c
-            port: FAILURE
-          1a88182d-afb7-f20a-d543-f2e5678ac42f:
-            targetId: fe398880-3566-1a85-745a-1e92972bf3f7
-            port: SUCCESS
-    results:
-      FAILURE:
-        e7e52e5e-c856-c253-0b31-ba3c203fc09c:
-          x: 276
-          y: 277
-      SUCCESS:
-        fe398880-3566-1a85-745a-1e92972bf3f7:
-          x: 767
-          y: 71

@@ -1,4 +1,4 @@
-#   (c) Copyright 2014-2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2014-2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -11,10 +11,10 @@
 #!
 #! @input container: name or ID of the Docker container that runs MySQL
 #! @input host: Docker machine host
-#! @input port: optional - Docker machine port
+#! @input port: Optional - Docker machine port
 #! @input username: Docker machine username
-#! @input password: optional - Docker machine password
-#! @input private_key_file: optional - path to private key file
+#! @input password: Optional - Docker machine password
+#! @input private_key_file: Optional - path to private key file
 #! @input mysql_username: MySQL instance username
 #! @input mysql_password: MySQL instance password
 #!

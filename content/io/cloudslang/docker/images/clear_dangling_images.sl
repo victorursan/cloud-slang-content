@@ -1,4 +1,4 @@
-#   (c) Copyright 2014-2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2014-2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -8,15 +8,15 @@
 #!!
 #! @description: Deletes unused dangling Docker images.
 #!
-#! @input docker_options: optional - options for the docker environment
+#! @input docker_options: Optional - options for the docker environment
 #!                        from the construct: docker [OPTIONS] COMMAND [arg...]
 #! @input docker_host: Docker machine host
 #! @input docker_username: Docker machine username
-#! @input docker_password: optional - Docker machine password
-#! @input private_key_file: optional - absolute path to private key file
+#! @input docker_password: Optional - Docker machine password
+#! @input private_key_file: Optional - absolute path to private key file
 #! @input used_images: list of used images - Format: space delimited list of strings
-#! @input port: optional - SSH port
-#! @input timeout: optional - time in milliseconds to wait for the command to complete
+#! @input port: Optional - SSH port
+#! @input timeout: Optional - time in milliseconds to wait for the command to complete
 #!
 #! @output dangling_images_list_safe_to_delete: unused Docker images (including dangling ones)
 #! @output amount_of_dangling_images_deleted: number of dangling images that where deleted

@@ -1,4 +1,4 @@
-#   (c) Copyright 2014-2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2014-2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -11,10 +11,10 @@
 #!
 #! @input docker_host: Docker machine host
 #! @input docker_username: Docker machine username
-#! @input docker_password: optional - Docker machine password
-#! @input private_key_file: optional - path to the private key file
+#! @input docker_password: Optional - Docker machine password
+#! @input private_key_file: Optional - path to the private key file
 #! @input percentage: Example: 50%
-#! @input timeout: optional - time in milliseconds to wait for the command to complete
+#! @input timeout: Optional - time in milliseconds to wait for the command to complete
 #!
 #! @result SUCCESS: disk space less than percentage
 #! @result FAILURE: error occurred

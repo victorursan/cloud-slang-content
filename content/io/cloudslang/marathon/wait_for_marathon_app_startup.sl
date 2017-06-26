@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -10,13 +10,13 @@
 #! @description: Wait for Marathon app startup.
 #!
 #! @input marathon_host: Marathon host
-#! @input marathon_port: optional - Marathon port
+#! @input marathon_port: Optional - Marathon port
 #! @input created_app_id: Marathon app id
-#! @input attempts: optional - attempts to reach host - Default: 1
-#! @input time_to_sleep: optional - time in seconds to wait between attempts - Default: 1
+#! @input attempts: Optional - attempts to reach host - Default: 1
+#! @input time_to_sleep: Optional - time in seconds to wait between attempts - Default: 1
 #!
 #! @result SUCCESS: waiting for the Maranthon app to start up completed successfully
-#! @result FAILURE: there was an error while waiting for the Marathon app to start
+#! @result FAILURE: There was an error while waiting for the Marathon app to start
 #!!#
 ########################################################################################################################
 

@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -11,25 +11,27 @@
 #!
 #! @input container_id: container id
 #! @input host: Docker machine host
-#! @input port: optional - SSH port - Default: '22'
+#! @input port: Optional - SSH port - Default: '22'
 #! @input username: Docker machine username
 #! @input password: Docker machine password - Default: ''
 #! @input process_name: name of the process
-#! @input private_key_file: optional - absolute path to private key file - Default: ''
-#! @input arguments: optional - arguments to pass to the command - Default ''
-#! @input character_set: optional - character encoding used for input stream encoding from target machine
+#! @input private_key_file: Optional - absolute path to private key file - Default: ''
+#! @input arguments: Optional - arguments to pass to the command - Default ''
+#! @input character_set: Optional - character encoding used for input stream encoding from target machine
 #!                       Valid: 'SJIS', 'EUC-JP', 'UTF-8' - Default 'UTF-8'
-#! @input pty: optional - whether to use PTY - Valid: true, false - Default: false
-#! @input timeout: optional - time in milliseconds to wait for command to complete - Default: 90000
-#! @input close_session: optional - if 'false' SSH session will be cached for future calls during the life of the flow,
+#! @input pty: Optional - whether to use PTY - Valid: true, false - Default: false
+#! @input timeout: Optional - time in milliseconds to wait for command to complete - Default: 90000
+#! @input close_session: Optional - if 'false' SSH session will be cached for future calls during the life of the flow,
 #!                       if 'true' the SSH session used will be closed;
 #!                       Valid: true, false - Default: false
-#! @input agent_forwarding: optional - the sessionObject that holds the connection if the close session is false
+#! @input agent_forwarding: Optional - the sessionObject that holds the connection if the close session is false
 #!                          Default: ''
+#!
 #! @output standard_err: error message
 #! @output return_result: list of running processes on the container
-#! @result SUCCESS: the list of running processes on that specific container retrieved sucessfully
-#! @result FAILURE: there was an error while trying to retrieve the list of running processes from the container
+#!
+#! @result SUCCESS: The list of running processes on that specific container retrieved sucessfully
+#! @result FAILURE: There was an error while trying to retrieve the list of running processes from the container
 #!!#
 ########################################################################################################################
 
@@ -52,9 +54,9 @@ flow:
         required: false
     - username
     - password:
-        sensitive: true
         default: ''
         required: false
+        sensitive: true
     - private_key_file:
         default: ''
         required: false

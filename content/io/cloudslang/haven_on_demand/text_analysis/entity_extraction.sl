@@ -1,4 +1,4 @@
-#   (c) Copyright 2016 Hewlett-Packard Enterprise Development Company, L.P.
+#   (c) Copyright 2017 Hewlett-Packard Enterprise Development Company, L.P.
 #   All rights reserved. This program and the accompanying materials
 #   are made available under the terms of the Apache License v2.0 which accompany this distribution.
 #
@@ -11,20 +11,20 @@
 #!
 #! @input api_key: API key
 #! @input reference: Haven OnDemand reference
-#! @input entity_type: optional - type of entity to extract from the specified text
+#! @input entity_type: Optional - type of entity to extract from the specified text
 #!                     valid: Haven OnDemand entity type
 #!                     default: people_eng
-#! @input show_alternatives: optional - set to true to return multiple entries when there
+#! @input show_alternatives: Optional - set to true to return multiple entries when there
 #!                           are multiple matches for a particular string
 #!                           default: false
-#! @input proxy_host: optional - proxy server
-#! @input proxy_port: optional - proxy server port
+#! @input proxy_host: Optional - proxy server
+#! @input proxy_port: Optional - proxy server port
 #!
 #! @output return_result: result of API
 #! @output error_message: error message if one exists, empty otherwise
 #!
 #! @result SUCCESS: information snippets successfully found in text
-#! @result FAILURE: there was an error while trying to find information snippets
+#! @result FAILURE: There was an error while trying to find information snippets
 #!!#
 ########################################################################################################################
 
