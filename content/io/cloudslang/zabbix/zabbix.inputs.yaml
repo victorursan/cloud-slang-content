@@ -1,0 +1,8 @@
+zabbix_host: "16.77.9.240"
+zabbix_username: "Admin"
+zabbix_password: "zab1bix"
+zabbix_port: "443"
+zabbix_protocol: "https"
+trust_all_roots: "true"
+certificate_hostname_verifier: "allow_all"
+
