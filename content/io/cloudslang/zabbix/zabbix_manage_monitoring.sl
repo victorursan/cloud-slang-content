@@ -12,7 +12,7 @@
 #!                       Configuration -> Templates)
 #! @input agent_port: The agent interface port.
 #! @input primary_ip: The primary IP of the agent interface.
-#! @input host_group: The groups in wich the host to be added.
+#! @input host_group: The groups in which the host to be added.
 #! @input auth_type: The type of authentication used by this operation when trying to execute the request on the target
 #!                   server. The authentication is not preemptive: a plain request not including authentication info
 #!                   will be made and only when the server responds with a 'WWW-Authenticate' header the client will
@@ -41,7 +41,7 @@
 #!                                       first CN, or any of the subject-alts. A wildcard can occur in the CN, and in
 #!                                       any of the subject-alts. The only difference between "browser_compatible" and
 #!                                       strict" is that a wildcard (such as "*.foo.com") with "browser_compatible"
-#!                                       matches all subdomains, including "a.b.foo.com". From the security perspective,
+#!                                       matches all sub-domains, including "a.b.foo.com". From the security perspective,
 #!                                       to provide protection against possible Man-In-The-Middle attacks, we strongly
 #!                                       recommend to use "strict" option.
 #! @input trust_keystore: The pathname of the Java TrustStore file. This contains certificates from other parties that
@@ -69,18 +69,18 @@
 #!                        error message.
 #! @output zabbix_token: Generated description
 #!
-#! @result FAILURE: An exception occured.
 #! @result SUCCESS: The flow has run as the description states.
+#! @result FAILURE: An exception occurred.
 #!!#
 ########################################################################################################################
 
 namespace: io.cloudslang.content.zabbix
 
 imports:
-  http:  io.cloudslang.base.http
-  json:  io.cloudslang.base.json
-  print: io.cloudslang.base.print
   utils: io.cloudslang.base.utils
+  authentication: io.cloudslang.zabbix.authentication
+  servers: io.cloudslang.zabbix.servers
+
 
 flow:
   name: zabbix_manage_monitoring
@@ -147,7 +147,7 @@ flow:
   workflow:
     - get_authentication_token:
         do:
-          get_authentication_token:
+          authentication.get_authentication_token:
             - zabbix_host
             - zabbix_port
             - zabbix_protocol
@@ -179,7 +179,7 @@ flow:
 
     - register_server:
         do:
-          register_server:
+          servers.register_server:
             - zabbix_host
             - zabbix_port
             - zabbix_protocol
@@ -216,40 +216,28 @@ flow:
 
     - set_failure_message_1:
         do:
-          set_failure_message:
-            - field_1
-            - return_result: ${'Unable to add the server "' + server_name + '" to monitored list:' + return_result}
-            - field_2
-            - field_3
-            - field_4
+          utils.noop:
+            - text: ${'Unable to add the server "' + server_name + '" to monitored list:' + return_result}
         publish:
-          - return_result
+          - return_result: ${ text }
         navigate:
           - SUCCESS: FAILURE
 
     - set_failure_message_2:
         do:
-          set_failure_message:
-            - field_1
-            - return_result: ${'Unable to receive an authentication token:' + return_result}
-            - field_2
-            - field_3
-            - field_4
+          utils.noop:
+            - text: ${'Unable to receive an authentication token:' + return_result}
         publish:
-          - return_result
+          - return_result: ${ text }
         navigate:
           - SUCCESS: FAILURE
 
     - set_success_message:
         do:
-          set_success_message:
-            - field_1
-            - return_result: ${'Successfully added "' + server_name + '" to the monitoring list.'}
-            - field_2
-            - field_3
-            - field_4
+          utils.noop:
+            - text: ${'Successfully added "' + server_name + '" to the monitoring list.'}
         publish:
-          - return_result
+          - return_result: ${ text }
         navigate:
           - SUCCESS: SUCCESS
 

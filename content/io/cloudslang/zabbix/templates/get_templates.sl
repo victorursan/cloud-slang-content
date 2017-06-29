@@ -86,6 +86,7 @@
 namespace: io.cloudslang.content.zabbix.templates
 
 imports:
+  utils: io.cloudslang.base.utils
   http:  io.cloudslang.base.http
 
 flow: 
@@ -320,6 +321,6 @@ flow:
     - return_code
   
   results: 
-    - FAILURE
     - SUCCESS
+    - FAILURE
 

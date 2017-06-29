@@ -87,7 +87,7 @@ namespace: io.cloudslang.content.zabbix.maintenance
 imports:
   http:  io.cloudslang.base.http
   json:  io.cloudslang.base.json
-  print: io.cloudslang.base.print
+  math: io.cloudslang.base.math
   utils: io.cloudslang.base.utils
 
 flow:
@@ -156,12 +156,11 @@ flow:
   workflow:
     - convert_hours_in_seconds:
         do:
-          convert_hours_in_seconds:
+          math.multiply_numbers:
             - value_1: ${period_for_maintenance_in_hours}
             - value_2: '3600'
-            - operation: '*'
         publish:
-          - period_for_maintenance_in_seconds
+          - period_for_maintenance_in_seconds: ${result}
         navigate:
           - DONE: get_zabbix_host_id_json
 

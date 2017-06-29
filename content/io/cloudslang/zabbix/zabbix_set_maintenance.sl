@@ -74,10 +74,9 @@
 namespace: io.cloudslang.content.zabbix
 
 imports:
-  http:  io.cloudslang.base.http
-  json:  io.cloudslang.base.json
-  print: io.cloudslang.base.print
   utils: io.cloudslang.base.utils
+  authentication: io.cloudslang.zabbix.authentication
+  maintenance: io.cloudslang.zabbix.maintenance
 
 flow: 
   name: zabbix_set_maintenance
@@ -141,7 +140,7 @@ flow:
   workflow: 
     - get_authentication_token:
         do:
-          get_authentication_token: 
+          authentication.get_authentication_token:
             - zabbix_host
             - zabbix_port
             - zabbix_protocol
@@ -173,7 +172,7 @@ flow:
         
     - set_maintenance:
         do:
-          set_maintenance: 
+          maintenance.set_maintenance:
             - zabbix_host
             - zabbix_port
             - zabbix_protocol
@@ -205,44 +204,33 @@ flow:
         navigate: 
           - SUCCESS: set_success_message
           - FAILURE: set_failure_message_2
-        
+
+
     - set_failure_message_1:
         do:
-          set_failure_message: 
-            - field_1
-            - return_result: ${'Unable to receive an authentication token:' + return_result}
-            - field_2
-            - field_3
-            - field_4
-        publish: 
-          - return_result 
-        navigate: 
+          utils.noop:
+            - text: ${'Unable to receive an authentication token:' + return_result}
+        publish:
+          - return_result: ${ text }
+        navigate:
           - SUCCESS: FAILURE
-        
+
     - set_success_message:
         do:
-          set_success_message: 
-            - field_1
-            - return_result: ${'Successfully set the maintenance "' + maintenance_name + '".'} 
-            - field_2
-            - field_3
-            - field_4
-        publish: 
-          - return_result 
-        navigate: 
+          utils.noop:
+            - text: ${'Successfully set the maintenance "' + maintenance_name + '".'}
+        publish:
+          - return_result: ${ text }
+        navigate:
           - SUCCESS: SUCCESS
-        
+
     - set_failure_message_2:
         do:
-          set_failure_message: 
-            - field_1
-            - return_result: ${'Unable to set the maintenance "' + maintenance_name + '" for server "' + server_name + '":' + return_result}
-            - field_2
-            - field_3
-            - field_4
-        publish: 
-          - return_result 
-        navigate: 
+          utils.noop:
+            - text: ${'Unable to set the maintenance "' + maintenance_name + '" for server "' + server_name + '":' + return_result}
+        publish:
+          - return_result: ${ text }
+        navigate:
           - SUCCESS: FAILURE
         
   outputs: 

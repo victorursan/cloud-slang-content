@@ -86,6 +86,7 @@ namespace: io.cloudslang.content.zabbix.servers
 
 imports:
   http:  io.cloudslang.base.http
+  utils: io.cloudslang.base.utils
 
 flow: 
   name: register_server

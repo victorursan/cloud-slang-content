@@ -96,4 +96,3 @@ flow:
   results: 
     - SUCCESS
     - FAILURE
-

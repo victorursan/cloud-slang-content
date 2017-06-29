@@ -72,7 +72,7 @@
 namespace: io.cloudslang.content.zabbix
 
 imports:
-
+  utils: io.cloudslang.base.utils
   authentication: io.cloudslang.zabbix.authentication
   maintenance: io.cloudslang.zabbix.maintenance
 
@@ -201,40 +201,28 @@ flow:
 
     - set_failure_message_1:
         do:
-          set_failure_message:
-            - field_1
-            - return_result: ${'Unable to receive an authentication token:' + return_result}
-            - field_2
-            - field_3
-            - field_4
+          utils.noop:
+            - text: ${'Unable to receive an authentication token:' + return_result}
         publish:
-          - return_result
+          - return_result: ${ text }
         navigate:
           - SUCCESS: FAILURE
 
     - set_success_message:
         do:
-          set_success_message:
-            - field_1
-            - return_result: ${'Successfully unset the maintenance "' + maintenance_name + '".'}
-            - field_2
-            - field_3
-            - field_4
+          utils.noop:
+            - text: ${'Successfully unset the maintenance "' + maintenance_name + '".'}
         publish:
-          - return_result
+          - return_result: ${ text }
         navigate:
           - SUCCESS: SUCCESS
 
     - set_failure_message_2:
         do:
-          set_failure_message:
-            - field_1
-            - return_result: ${'Unable to unset the maintenance "' + maintenance_name + '":' + return_result}
-            - field_2
-            - field_3
-            - field_4
+          utils.noop:
+            - text: ${'Unable to unset the maintenance "' + maintenance_name + '":' + return_result}
         publish:
-          - return_result
+          - return_result: ${ text }
         navigate:
           - SUCCESS: FAILURE
 

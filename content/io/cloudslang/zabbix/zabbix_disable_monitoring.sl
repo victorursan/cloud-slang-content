@@ -72,10 +72,10 @@
 namespace: io.cloudslang.content.zabbix
 
 imports:
-  http:  io.cloudslang.base.http
-  json:  io.cloudslang.base.json
-  print: io.cloudslang.base.print
   utils: io.cloudslang.base.utils
+  authentication: io.cloudslang.zabbix.authentication
+  server: io.cloudslang.zabbix.server
+
 
 flow:
   name: zabbix_disable_monitoring
@@ -137,7 +137,7 @@ flow:
   workflow:
     - get_authentication_token:
         do:
-          get_authentication_token:
+          authentication.get_authentication_token:
             - zabbix_host
             - zabbix_port
             - zabbix_protocol
@@ -169,7 +169,7 @@ flow:
 
     - unregister_server:
         do:
-          unregister_server:
+          server.unregister_server:
             - zabbix_host
             - zabbix_port
             - zabbix_protocol
@@ -202,40 +202,28 @@ flow:
 
     - set_failure_message_1:
         do:
-          set_failure_message:
-            - field_1
+          utils.noop:
             - text: ${'Unable to receive an authentication token:' + return_result}
-            - field_2
-            - field_3
-            - field_4
         publish:
-          - return_result: ${text}
+          - return_result: ${ text }
         navigate:
           - SUCCESS: FAILURE
 
     - set_failure_message_2:
         do:
-          set_failure_message:
-            - field_1
-            - return_result: ${'Unable to remove the server "' + server_name + '" from monitored list:' + return_result}
-            - field_2
-            - field_3
-            - field_4
+          utils.noop:
+            - text: ${'Unable to remove the server "' + server_name + '" from monitored list:' + return_result}
         publish:
-          - return_result
+          - return_result: ${ text }
         navigate:
           - SUCCESS: FAILURE
 
     - set_success_message:
         do:
-          set_success_message:
-            - field_1
-            - return_result: ${'Successfully removed "' + server_name + '" from monitored list.'}
-            - field_2
-            - field_3
-            - field_4
+          utils.noop:
+            - text: ${'Successfully removed "' + server_name + '" from monitored list.'}
         publish:
-          - return_result
+          - return_result: ${ text }
         navigate:
           - SUCCESS: SUCCESS
 
